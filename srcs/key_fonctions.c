@@ -6,7 +6,7 @@
 /*   By: tfavart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 14:36:37 by tfavart           #+#    #+#             */
-/*   Updated: 2018/01/12 15:15:07 by tfavart          ###   ########.fr       */
+/*   Updated: 2018/01/16 15:08:12 by tfavart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static void		ft_zoom(int key, t_mlx *smlx)
 {
 	if (key == 78)
 	{
-		smlx->coord.spanx /= 2;
-		smlx->coord.spany /= 2;
+		smlx->coord.spanx /= 1.3;
+		smlx->coord.spany /= 1.3;
 		smlx->coord.zoomx = smlx->wlenx / 2 / smlx->coord.spanx;
 		smlx->coord.zoomy = smlx->wleny / 2 / smlx->coord.spany;
 		mlx_clear_window(smlx->mlx, smlx->win);
@@ -62,8 +62,8 @@ static void		ft_zoom(int key, t_mlx *smlx)
 	}
 	if (key == 69)
 	{
-		smlx->coord.spanx *= 2;
-		smlx->coord.spany *= 2;
+		smlx->coord.spanx *= 1.3;
+		smlx->coord.spany *= 1.3;
 		smlx->coord.zoomx = smlx->wlenx / 2 / smlx->coord.spanx;
 		smlx->coord.zoomy = smlx->wleny / 2 / smlx->coord.spany;
 		mlx_clear_window(smlx->mlx, smlx->win);
@@ -74,11 +74,26 @@ static void		ft_zoom(int key, t_mlx *smlx)
 
 static void		ft_psy(int key, t_mlx *smlx)
 {
-	ft_putnbr(smlx->mouse_move);
 	if (key == 83 && smlx->mouse_move == 0)
 		smlx->mouse_move = 1;
 	else if (key == 83 && smlx->mouse_move == 1)
 		smlx->mouse_move = 0;
+	if (key == 1)
+	{
+		smlx->color++;
+		if (smlx->color > 2)
+			smlx->color = 0;
+		mlx_clear_window(smlx->mlx, smlx->win);
+		mlx_destroy_image(smlx->mlx, smlx->img.ptr);
+		ft_image(smlx, &(smlx->img));
+	}
+	if (key == 49)
+	{
+		ft_init(smlx);
+		mlx_clear_window(smlx->mlx, smlx->win);
+		mlx_destroy_image(smlx->mlx, smlx->img.ptr);
+		ft_image(smlx, &(smlx->img));
+	}
 }
 
 int				ft_key_hook(int keycode, t_mlx *smlx)
@@ -89,7 +104,7 @@ int				ft_key_hook(int keycode, t_mlx *smlx)
 		mlx_destroy_image(smlx->mlx, smlx->img.ptr);
 		exit(0);
 	}
-	if (keycode == 67)
+	if (keycode == 67 && smlx->coord.iter * 2 < 10000)
 	{
 		smlx->coord.iter *= 2;
 		mlx_clear_window(smlx->mlx, smlx->win);

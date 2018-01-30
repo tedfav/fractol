@@ -6,13 +6,13 @@
 /*   By: tfavart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 08:02:31 by tfavart           #+#    #+#             */
-/*   Updated: 2018/01/12 15:25:04 by tfavart          ###   ########.fr       */
+/*   Updated: 2018/01/22 13:31:51 by tfavart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void		ft_init(t_mlx *smlx)
+void			ft_init(t_mlx *smlx)
 {
 	if (smlx->i == 1)
 	{
@@ -38,6 +38,7 @@ static void		ft_init(t_mlx *smlx)
 	smlx->coord.posy = 0;
 	smlx->coord.zoomx = smlx->wlenx / 2 / smlx->coord.spanx;
 	smlx->coord.zoomy = smlx->wleny / 2 / smlx->coord.spany;
+	smlx->color = 0;
 }
 
 static int		ft_window(char *av, void *imlx)
@@ -63,15 +64,29 @@ static int		ft_window(char *av, void *imlx)
 	return (0);
 }
 
+static void		ft_menu(void)
+{
+	ft_putstr("listes des commandes :\n\n");
+	ft_putstr("deplacement : fleches directionnelles\n");
+	ft_putstr("zoom sourie : molette\n");
+	ft_putstr("zoom clavier : + - pave numeriaue\n");
+	ft_putstr("couleur suivante : s\n");
+	ft_putstr("reset : espace\n");
+	ft_putstr("variation julia : 1 pave numerique\n");
+	ft_putstr("augmenter les detailles : * pave numerique\n");
+}
+
 int				main(int ac, char **av)
 {
 	void		*imlx;
 
-	if (ac <= 1 || ac >= 3)
+	if (ac != 2 || (ft_strcmp(av[1], "1") != 0 && ft_strcmp(av[1], "2") != 0
+				&& ft_strcmp(av[1], "3") != 0))
 	{
 		ft_putstr("Usage: ./fractol 1 or 2 or 3\n");
 		return (0);
 	}
+	ft_menu();
 	imlx = mlx_init();
 	ft_window(av[1], imlx);
 	return (0);
