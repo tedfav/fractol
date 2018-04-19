@@ -13,7 +13,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-void		*ft_memmove(void *dst, const void *src, size_t len)
+/*void		*ft_memmove(void *dst, const void *src, size_t len)
 {
 	unsigned char	*dest;
 	unsigned char	*sr;
@@ -39,4 +39,4 @@ void		*ft_memmove(void *dst, const void *src, size_t len)
 	else
 		dest = ft_memcpy(dst, src, len);
 	return ((void*)dst);
-}
+}*/

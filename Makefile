@@ -1,8 +1,8 @@
 NAME = fractol
-FLAGS = -Wall -Wextra -Werror
+FLAGS = 
 DIRLIB = ./libft
 LIB = ./libft/libft.a
-MLX = ./minilibx_macos
+MLX = ./minilibx
 SRCS = main.c \
 	   key_fonctions.c \
 	   mouse_fonctions.c \
@@ -19,7 +19,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@make -C $(DIRLIB)
 	@make -C $(MLX)
-	@gcc $(FLAGS) -o $(NAME) $(OBJS) -lmlx -framework OpenGL -framework AppKit -lm $(LIB) -I $(INC)
+	@gcc -o $(NAME) $(OBJS) -L$(MLX) -l mlx -lXext -lX11 -lm $(LIB) -I $(INC)
 
 %.o: %.c
 	@gcc $(FLAGS) -c -o $@ $< -I $(INC)
